@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import logo from "../logo/images.png";
 import { useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
 const ReferralList = () => {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ const ReferralList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
-  // const { id } = useParams();
 
   const rowsPerPage = 5;
 
