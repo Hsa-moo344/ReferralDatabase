@@ -1,0 +1,337 @@
+/* ===== Main Container ===== */
+.MainReferralContainer {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f4f7fb;
+}
+
+/* ===== Form Card ===== */
+.HeaderSession {
+  width: 50%;
+  max-width: 700px;
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Header ===== */
+.HeaderSession h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+.PatientInfoSection label {
+  text-align: center;
+  width: 100%;
+}
+
+.SubHeaderSession {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* ===== Form ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== ONE COLUMN GRID ===== */
+.PatientInfoSection,
+.ClinicalSection,
+.InsuranceSection,
+.FooterSection,
+.reasonsForReferral,
+.otherInformation {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* ===== Labels ===== */
+label,
+input {
+  margin-bottom: 3px;
+  width: 30%;
+}
+
+form > button {
+  align-self: center;
+  width: 200px;
+}
+
+/* ===== Inputs (FULL WIDTH) ===== */
+input,
+select,
+textarea {
+  width: 100%; /* ✅ FIXED */
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #dcdde1;
+  font-size: 14px;
+}
+
+/* Focus */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* ===== Textarea ===== */
+textarea {
+  min-height: 100px;
+}
+
+/* ===== Vital Signs (inline row) ===== */
+.ClinicalSection > div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ClinicalSection > div input {
+  flex: 1;
+  min-width: 80px;
+}
+
+/* ===== Buttons ===== */
+button {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #3498db;
+  color: white;
+}
+
+.ReferralListButton {
+  background-color: #ecf0f1;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .HeaderSession {
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .HeaderSession {
+    width: 95%;
+    padding: 20px;
+  }
+}
+
+/* Referral_list css */
+/* ===== Page Container ===== */
+.ListReferralContainer {
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  font-family: Arial, sans-serif;
+}
+
+/* ===== Search Box ===== */
+.searchBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.searchInput {
+  width: 300px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #dcdde1;
+  font-size: 14px;
+}
+
+.searchInput:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* ===== Back Button ===== */
+.BackButton {
+  margin-bottom: 15px;
+  padding: 8px 14px;
+  background-color: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.BackButton:hover {
+  background-color: #7f8c8d;
+}
+
+/* ===== Table Container ===== */
+.TableContainer {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+/* ===== Table ===== */
+.ReferralTable {
+  width: 100%;
+  border-collapse: collapse; /* IMPORTANT */
+  border: 1px solid black;
+}
+.ReferralTable th {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.ReferralTable td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.ReferralTable td:nth-child(5),
+.ReferralTable th:nth-child(5) {
+  text-align: center;
+}
+
+/* ===== Header ===== */
+.ReferralTable thead {
+  background-color: #2c3e50;
+}
+
+.ReferralTable th {
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ===== Body ===== */
+.ReferralTable td {
+  padding: 10px;
+  border-bottom: 1px solid #ecf0f1;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* Zebra Row */
+.ReferralTable tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Hover Effect */
+.ReferralTable tbody tr:hover {
+  background-color: #eef5fb;
+}
+
+/* Empty State */
+.ReferralTable td[colspan] {
+  text-align: center;
+  padding: 20px;
+  color: #7f8c8d;
+}
+
+/* ===== Action Buttons ===== */
+.EditButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.EditButton:hover {
+  background-color: #2980b9;
+}
+
+.DeleteButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.DeleteButton:hover {
+  background-color: #c0392b;
+}
+
+/* ===== Pagination ===== */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #2980b9;
+}
+
+.pagination button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* ===== Download Button ===== */
+.downloadBtn {
+  margin-top: 15px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2ecc71;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.downloadBtn:hover {
+  background-color: #27ae60;
+}
+
+.status {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .searchInput {
+    width: 100%;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* Logout Button */
