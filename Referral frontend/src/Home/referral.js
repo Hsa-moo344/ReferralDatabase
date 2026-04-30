@@ -3,7 +3,6 @@ import PatientReferral from "../css/patient-referral-module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 const Referalform = () => {
   const navigate = useNavigate();
@@ -108,7 +107,11 @@ const Referalform = () => {
             gender: data.gender || "",
             age: data.age || "",
             placeOfResidence: data.place_of_residence || "",
-            dateOfSeeing: data.date_of_seeing || "",
+
+            // ✅ ONLY ONE dateOfSeeing
+            dateOfSeeing: data.date_of_seeing
+              ? data.date_of_seeing.split("T")[0]
+              : "",
 
             currentCondition: data.current_condition || "",
             essentialInvestigations: data.essential_investigations || "",
@@ -132,9 +135,6 @@ const Referalform = () => {
             medicSignature: data.medic_signature || "",
             departmentName: data.department_name || "",
             date: data.record_date ? data.record_date.split("T")[0] : "",
-            dateOfSeeing: data.date_of_seeing
-              ? data.date_of_seeing.split("T")[0]
-              : "",
           });
         })
         .catch((err) => console.error(err));
