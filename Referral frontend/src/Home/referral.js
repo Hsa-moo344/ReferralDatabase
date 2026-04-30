@@ -8,7 +8,6 @@ import { useLocation } from "react-router-dom";
 const Referalform = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const location = useLocation();
 
   const departmentlist = [
     "Adult OPD",

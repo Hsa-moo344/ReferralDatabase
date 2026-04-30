@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import PatientReferral from "../css/patient-referral-module.css";
 
 function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
