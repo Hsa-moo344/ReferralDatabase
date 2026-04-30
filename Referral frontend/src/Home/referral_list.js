@@ -14,7 +14,7 @@ const ReferralList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const rowsPerPage = 5;
 
@@ -247,6 +247,22 @@ const ReferralList = () => {
 
   return (
     <div className={PatientReferral.ListReferralContainer}>
+      <button
+        onClick={handleLogout}
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "20px",
+          backgroundColor: "#e74c3c",
+          color: "white",
+          border: "none",
+          padding: "8px 15px",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Logout
+      </button>
       <h2 style={{ textAlign: "center" }}>Referral List</h2>
 
       {/* SEARCH BOX */}
