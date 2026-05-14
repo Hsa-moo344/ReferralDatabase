@@ -334,4 +334,12 @@ button[type="submit"] {
     align-items: flex-start;
   }
 }
-/* Logout Button */
+/* Logoin Button */
+.loginContainer {
+  min-height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c6dd7;
+  margin-top: 20px;
+}
