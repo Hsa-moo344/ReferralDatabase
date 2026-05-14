@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import PatientReferral from "../css/patient-referral-module.css";
 
 function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
@@ -39,16 +40,24 @@ function Login({ setIsLoggedIn }) {
   };
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: "100px",
-      }}
-    >
-      <h2>Login</h2>
+    <div className={PatientReferral.loginContainer}>
+      <h2 style={{ textAlign: "center", marginTop: "100px" }}>Login</h2>
 
-      <form onSubmit={handleLogin}>
-        <div>
+      <form
+        style={{
+          textAlign: "center",
+          width: "30%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          border: "none",
+          padding: "30px",
+          borderRadius: "8px",
+          backgroundColor: "#f2f2f2",
+          marginTop: "20px",
+        }}
+        onSubmit={handleLogin}
+      >
+        <div style={{ margin: "15px" }}>
           <input
             type="text"
             placeholder="Username"
@@ -58,9 +67,7 @@ function Login({ setIsLoggedIn }) {
           />
         </div>
 
-        <br />
-
-        <div>
+        <div style={{ margin: "15px" }}>
           <input
             type="password"
             placeholder="Password"
@@ -69,8 +76,6 @@ function Login({ setIsLoggedIn }) {
             required
           />
         </div>
-
-        <br />
 
         <button type="submit">Login</button>
       </form>
