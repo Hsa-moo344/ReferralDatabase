@@ -165,9 +165,7 @@ const Referalform = () => {
         Logout
       </button>
       <div className={PatientReferral.HeaderSession}>
-        <h2 style={{ textAlign: "center" }}>
-          MTC - Self Patient Referral Form Page
-        </h2>
+        <h2 style={{ textAlign: "center" }}>MTC -Patient Referral Form Page</h2>
         <div className={PatientReferral.SubHeaderSession}>
           <h3 style={{ textAlign: "center" }}>Patient Referral</h3>
         </div>

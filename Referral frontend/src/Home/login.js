@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
+
+  /* ======================================
+     LOGIN
+  ====================================== */
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,73 +21,58 @@ function Login({ setIsLoggedIn }) {
         password,
       });
 
-      // ✅ Save login info
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", res.data.user.role);
+      if (res.data.success) {
+        // Save login status
+        localStorage.setItem("isLoggedIn", "true");
 
-      setIsLoggedIn(true);
+        // Update App state
+        setIsLoggedIn(true);
 
-      // ✅ Redirect to referral form
-      navigate("/");
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message);
-      } else {
-        alert("Server error");
+        alert("Login successful");
+
+        // Redirect
+        navigate("/");
       }
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
     <div
       style={{
-        width: "50%",
-        display: "block",
-        margin: "auto",
+        textAlign: "center",
         marginTop: "100px",
-        padding: "20px",
-        backgroundColor: "#6ba0e5",
-        color: "white",
-        borderRadius: "20px",
       }}
     >
-      <h2 style={{ textAlign: "center", marginTop: "100px" }}>Login</h2>
-      <form
-        style={{ width: "50%", margin: "0 auto", marginTop: "20px" }}
-        onSubmit={handleLogin}
-      >
-        <input
-          type="text"
-          placeholder="Enter Username or Email"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <h2>Login</h2>
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <form onSubmit={handleLogin}>
+        <div>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
 
-        <button
-          style={{
-            backgroundColor: "#0349a5",
-            color: "white",
-            border: "none",
-            padding: "10px 20px",
-            width: "150px",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-          type="submit"
-        >
-          Login
-        </button>
-        <p>
-          Do you need to create an account?{" "}
-          <a href="/register">Register here</a>
-        </p>
+        <br />
+
+        <div>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <br />
+
+        <button type="submit">Login</button>
       </form>
     </div>
   );

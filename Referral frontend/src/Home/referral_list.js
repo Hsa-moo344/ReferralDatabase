@@ -233,6 +233,8 @@ const ReferralList = () => {
       );
 
       y += 10;
+      doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
+      y += 10;
       doc.text("Medic Signature: ____________________", 10, y);
     });
 
