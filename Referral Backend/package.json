@@ -1,17 +1,22 @@
 {
   "name": "referral-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "referral.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node referral.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "body-parser": "^2.2.2",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^3.22.3",
+    "nodemailer": "^8.0.7",
+    "twilio": "^6.0.1"
   }
 }
