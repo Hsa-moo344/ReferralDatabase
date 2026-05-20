@@ -1,88 +1,86 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import PatientReferral from "../css/patient-referral-module.css";
 
 function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
+
+  /* ======================================
+     LOGIN
+  ====================================== */
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        "https://referraldatabase.onrender.com/api/login",
+        {
+          username,
+          password,
+        },
+      );
 
-      // ✅ Save login info
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", res.data.user.role);
+      if (res.data.success) {
+        // Save login status
+        localStorage.setItem("isLoggedIn", "true");
 
-      setIsLoggedIn(true);
+        // Update App state
+        setIsLoggedIn(true);
 
-      // ✅ Redirect to referral form
-      navigate("/");
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.message);
-      } else {
-        alert("Server error");
+        alert("Login successful");
+
+        // Redirect
+        navigate("/");
       }
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div
-      style={{
-        width: "50%",
-        display: "block",
-        margin: "auto",
-        marginTop: "100px",
-        padding: "20px",
-        backgroundColor: "#6ba0e5",
-        color: "white",
-        borderRadius: "20px",
-      }}
-    >
+    <div className={PatientReferral.loginContainer}>
       <h2 style={{ textAlign: "center", marginTop: "100px" }}>Login</h2>
+
       <form
-        style={{ width: "50%", margin: "0 auto", marginTop: "20px" }}
+        style={{
+          textAlign: "center",
+          width: "30%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          border: "none",
+          padding: "30px",
+          borderRadius: "8px",
+          backgroundColor: "#f2f2f2",
+          marginTop: "20px",
+        }}
         onSubmit={handleLogin}
       >
-        <input
-          type="text"
-          placeholder="Enter Username or Email"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <div style={{ margin: "15px" }}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div style={{ margin: "15px" }}>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
-        <button
-          style={{
-            backgroundColor: "#0349a5",
-            color: "white",
-            border: "none",
-            padding: "10px 20px",
-            width: "150px",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-          type="submit"
-        >
-          Login
-        </button>
-        <p>
-          Do you need to create an account?{" "}
-          <a href="/register">Register here</a>
-        </p>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

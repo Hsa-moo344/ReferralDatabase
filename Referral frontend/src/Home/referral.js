@@ -79,10 +79,16 @@ const Referalform = () => {
 
     try {
       if (id) {
-        await axios.put(`http://localhost:8000/api/referrals/${id}`, formData);
+        await axios.put(
+          `https://referraldatabase.onrender.com/api/referrals/${id}`,
+          formData,
+        );
         alert("Updated successfully!");
       } else {
-        await axios.post("http://localhost:8000/api/referrals", formData);
+        await axios.post(
+          "https://referraldatabase.onrender.com/api/referrals",
+          formData,
+        );
         alert("Saved successfully!");
       }
 
@@ -96,7 +102,7 @@ const Referalform = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:8000/api/referrals/${id}`)
+        .get(`https://referraldatabase.onrender.com/api/referrals/${id}`)
         .then((res) => {
           const data = res.data;
 
@@ -165,9 +171,7 @@ const Referalform = () => {
         Logout
       </button>
       <div className={PatientReferral.HeaderSession}>
-        <h2 style={{ textAlign: "center" }}>
-          MTC - Self Patient Referral Form Page
-        </h2>
+        <h2 style={{ textAlign: "center" }}>MTC -Patient Referral Form Page</h2>
         <div className={PatientReferral.SubHeaderSession}>
           <h3 style={{ textAlign: "center" }}>Patient Referral</h3>
         </div>

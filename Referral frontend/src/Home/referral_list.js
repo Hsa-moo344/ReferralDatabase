@@ -61,7 +61,9 @@ const ReferralList = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/referrals");
+      const res = await axios.get(
+        "https://referraldatabase.onrender.com/api/referrals",
+      );
       setData(res.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -96,7 +98,9 @@ const ReferralList = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8000/api/referrals/${id}`);
+      await axios.delete(
+        `https://referraldatabase.onrender.com/api/referrals/${id}`,
+      );
       alert("Deleted successfully!");
       fetchData();
     } catch (error) {
@@ -232,6 +236,8 @@ const ReferralList = () => {
         y,
       );
 
+      y += 10;
+      doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
       y += 10;
       doc.text("Medic Signature: ____________________", 10, y);
     });

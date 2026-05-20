@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
@@ -9,22 +11,18 @@ app.use(express.json());
 
 /* ================= MYSQL CONNECTION ================= */
 
-// const pool = mysql.createPool({
-//   host: "localhost",
-//   user: "refer",
-//   password: "123456",
-//   database: "referraldatabase",
-// });
-
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
+
+  port: Number(process.env.DB_PORT), // 🔥 IMPORTANT FIX
+
+  connectTimeout: 20000, // 🔥 prevent ETIMEDOUT
 
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // required for Aiven
   },
 });
 
@@ -284,6 +282,6 @@ app.delete("/api/referrals/:id", (req, res) => {
 
 /* ================= SERVER ================= */
 
-app.listen(8000, () => {
-  console.log("Server running on http://localhost:8000");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
