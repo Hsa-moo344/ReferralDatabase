@@ -1,3 +1,6 @@
-node_modules/
+node_modules
 .env
+frontend/node_modules
+backend/node_modules
+Referral Backend/node_modules
 Referral Backend/.env
