@@ -151,7 +151,35 @@ const ReferralList = () => {
 
       // ===== SECTION 1 =====
       y += 10;
-      doc.text("1. Patient’s current status:", 10, y);
+      doc.text("1. Case Summary:", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Current compliant or concern:", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Refer information for current concern:", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Any past history (medicine):", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Any past history (surgical):", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Drug allergy:", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Birth history (for neonate):", 10, y);
+      doc.line(10, y + 2, 200, y + 2);
+
+      y += 10;
+      doc.text("Immunization history (for child):", 10, y);
       doc.line(10, y + 2, 200, y + 2);
 
       y += 7;

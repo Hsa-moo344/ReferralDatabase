@@ -20,6 +20,8 @@ const Referalform = () => {
     "Child IPD",
     "Eye",
     "Dental",
+    "ECU",
+    "Mental Health",
   ];
 
   const [formData, setFormData] = useState({
@@ -29,13 +31,14 @@ const Referalform = () => {
     gender: "",
     age: "",
     placeOfResidence: "",
-    dateOfSeeing: "",
+    dateOfSeeingbyMTC: "",
 
-    currentCondition: "",
+    caseSummary: "",
     essentialInvestigations: "",
 
     vitalSigns: {
       weight: "",
+      spo2: "",
       bp: "",
       pr: "",
       rr: "",
@@ -52,7 +55,7 @@ const Referalform = () => {
 
     medicSignature: "",
     departmentName: "",
-    date: "",
+    dateOfReferral: "",
   });
 
   // Handle normal input
@@ -115,15 +118,16 @@ const Referalform = () => {
             placeOfResidence: data.place_of_residence || "",
 
             // ✅ ONLY ONE dateOfSeeing
-            dateOfSeeing: data.date_of_seeing
-              ? data.date_of_seeing.split("T")[0]
+            dateOfSeeingbyMTC: data.date_of_seeing_by_mtc
+              ? data.date_of_seeing_by_mtc.split("T")[0]
               : "",
 
-            currentCondition: data.current_condition || "",
+            caseSummary: data.case_summary || "",
             essentialInvestigations: data.essential_investigations || "",
 
             vitalSigns: {
               weight: data.weight || "",
+              spo2: data.spo2 || "",
               bp: data.bp || "",
               pr: data.pr || "",
               rr: data.rr || "",
@@ -140,7 +144,9 @@ const Referalform = () => {
 
             medicSignature: data.medic_signature || "",
             departmentName: data.department_name || "",
-            date: data.record_date ? data.record_date.split("T")[0] : "",
+            dateOfReferral: data.date_of_referral
+              ? data.date_of_referral.split("T")[0]
+              : "",
           });
         })
         .catch((err) => console.error(err));
@@ -229,7 +235,7 @@ const Referalform = () => {
                 <option>Myanmar</option>
               </select>
 
-              <label>Date of Seeing</label>
+              <label>Date of Seeing by MTC</label>
               <input
                 type="date"
                 name="dateOfSeeing"
@@ -240,12 +246,77 @@ const Referalform = () => {
 
             {/* Clinical */}
             <div className={PatientReferral.ClinicalSection}>
-              <label>Current Condition</label>
-              <textarea
-                name="currentCondition"
-                value={formData.currentCondition}
-                onChange={handleChange}
-              />
+              <strong>Case Summary</strong>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <div>
+                  <label>Case Summary</label>
+                  <textarea
+                    name="caseSummary"
+                    value={formData.caseSummary}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label>Current Complaint or Concern</label>
+                  <textarea
+                    name="currentCondition"
+                    value={formData.currentCondition}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label>Refer information for current concern </label>
+                  <textarea
+                    name="referInformation"
+                    value={formData.referInformation}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <div>
+                  <label>Any past history (medicine)</label>
+                  <textarea
+                    name="pastHistory"
+                    value={formData.pastHistory}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label>Any past history (surgical) </label>
+                  <textarea
+                    name="surgicalHistory"
+                    value={formData.surgicalHistory}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <div>
+                  <label>Drug allergy</label>
+                  <textarea
+                    name="drugAllergy"
+                    value={formData.drugAllergy}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label>Birth history (for neonate) </label>
+                  <textarea
+                    name="birthHistory"
+                    value={formData.birthHistory}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label>Immunization history (for child) </label>
+                  <textarea
+                    name="immunizationHistory"
+                    value={formData.immunizationHistory}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
               <label>Essential Investigations Results</label>
               <textarea
@@ -258,6 +329,7 @@ const Referalform = () => {
               <div>
                 <label>Vital Signs</label>
                 <div style={{ display: "flex", gap: "10px" }}>
+                  <label>Weight</label>
                   <input
                     name="weight"
                     value={formData.vitalSigns.weight}
@@ -265,13 +337,24 @@ const Referalform = () => {
                     placeholder="weight"
                   />
 
+                  <label>SPO2</label>
+
+                  <input
+                    name="SPO2"
+                    value={formData.vitalSigns.SPO2}
+                    onChange={handleVitalChange}
+                    placeholder="oxygen saturation"
+                  />
+
+                  <label>BP</label>
                   <input
                     name="bp"
                     value={formData.vitalSigns.bp}
                     onChange={handleVitalChange}
-                    placeholder="body pressure"
+                    placeholder="blood pressure"
                   />
 
+                  <label>PR</label>
                   <input
                     name="pr"
                     value={formData.vitalSigns.pr}
@@ -279,6 +362,7 @@ const Referalform = () => {
                     placeholder="pulse rate"
                   />
 
+                  <label>RR</label>
                   <input
                     name="rr"
                     value={formData.vitalSigns.rr}
@@ -286,6 +370,7 @@ const Referalform = () => {
                     placeholder="respiratory rate"
                   />
 
+                  <label>Temp</label>
                   <input
                     name="temp"
                     value={formData.vitalSigns.temp}
@@ -331,6 +416,7 @@ const Referalform = () => {
                 <option>M-Fund</option>
                 <option>10 Year card</option>
                 <option>Social Security</option>
+                <option>NA</option>
               </select>
             </div>
             <div className={PatientReferral.otherInformation}>
@@ -370,7 +456,7 @@ const Referalform = () => {
                 ))}
               </select>
 
-              <label>Date</label>
+              <label>Date of Referral</label>
               <input
                 type="date"
                 name="date"
