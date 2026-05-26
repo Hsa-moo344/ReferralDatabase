@@ -122,7 +122,7 @@ const ReferralList = () => {
 
       // ===== TITLE =====
       doc.setFontSize(14);
-      doc.text("Self Referral Form", 105, y, { align: "center" });
+      doc.text("Patient Referral Form", 105, y, { align: "center" });
 
       y += 10;
 
@@ -267,7 +267,7 @@ const ReferralList = () => {
       >
         Logout
       </button>
-      <h2 style={{ textAlign: "center" }}>Referral List</h2>
+      <h2 style={{ textAlign: "center" }}>Patient Referral List</h2>
 
       {/* SEARCH BOX */}
       <div className={PatientReferral.searchBox}>
