@@ -238,8 +238,8 @@ const Referalform = () => {
               <label>Date of Seeing by MTC</label>
               <input
                 type="date"
-                name="dateOfSeeing"
-                value={formData.dateOfSeeing}
+                name="dateOfSeeingbyMTC"
+                value={formData.dateOfSeeingbyMTC}
                 onChange={handleChange}
               />
             </div>
@@ -259,8 +259,8 @@ const Referalform = () => {
                 <div>
                   <label>Current Complaint or Concern</label>
                   <textarea
-                    name="currentCondition"
-                    value={formData.currentCondition}
+                    name="currentComplaint"
+                    value={formData.currentComplaint}
                     onChange={handleChange}
                   />
                 </div>
@@ -340,8 +340,8 @@ const Referalform = () => {
                   <label>SPO2</label>
 
                   <input
-                    name="SPO2"
-                    value={formData.vitalSigns.SPO2}
+                    name="spo2"
+                    value={formData.vitalSigns.spo2}
                     onChange={handleVitalChange}
                     placeholder="oxygen saturation"
                   />
@@ -459,8 +459,8 @@ const Referalform = () => {
               <label>Date of Referral</label>
               <input
                 type="date"
-                name="date"
-                value={formData.date}
+                name="dateOfReferral"
+                value={formData.dateOfReferral}
                 onChange={handleChange}
               />
             </div>
