@@ -82,9 +82,16 @@ app.post("/api/referrals", (req, res) => {
       age,
       place_of_residence,
       date_of_seeing,
-      current_condition,
+      case_summary,
+      refer_information,
+      past_history,
+      surgical_history,
+      drug_allergy,
+      birth_history,
+      immunization_history,
       essential_investigations,
       weight,
+      spo2,
       bp,
       pr,
       rr,
@@ -97,9 +104,9 @@ app.post("/api/referrals", (req, res) => {
       phone_number,
       medic_signature,
       department_name,
-      record_date
+      referral_date
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const values = [
@@ -111,10 +118,18 @@ app.post("/api/referrals", (req, res) => {
     data.placeOfResidence,
     data.dateOfSeeing,
 
-    data.currentCondition,
+    data.caseSummary,
+    data.referInformation,
+    data.pastHistory,
+    data.surgicalHistory,
+    data.drugAllergy,
+    data.birthHistory,
+    data.immunizationHistory,
+
     data.essentialInvestigations,
 
     data.vitalSigns.weight,
+    data.vitalSigns.spo2,
     data.vitalSigns.bp,
     data.vitalSigns.pr,
     data.vitalSigns.rr,
@@ -123,23 +138,28 @@ app.post("/api/referrals", (req, res) => {
     data.initialDiagnosis,
     data.treatmentBeforeReferral,
     data.reasonsForReferral,
-
     data.healthInsurance,
     data.otherInformation,
     data.phone_number,
-
     data.medicSignature,
     data.departmentName,
-    data.date,
+    data.referralDate,
   ];
 
   pool.query(sql, values, (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).send("Error saving data");
+
+      return res.status(500).json({
+        message: "Insert failed",
+        error: err,
+      });
     }
 
-    res.send("Saved successfully");
+    res.json({
+      success: true,
+      message: "Saved successfully",
+    });
   });
 });
 
@@ -193,9 +213,10 @@ app.put("/api/referrals/:id", (req, res) => {
       age=?,
       place_of_residence=?,
       date_of_seeing=?,
-      current_condition=?,
+      case_summary=?,
       essential_investigations=?,
       weight=?,
+      spo2=?,
       bp=?,
       pr=?,
       rr=?,
@@ -208,7 +229,7 @@ app.put("/api/referrals/:id", (req, res) => {
       phone_number=?,
       medic_signature=?,
       department_name=?,
-      record_date=?
+      referral_date=?
     WHERE id=?
   `;
 
@@ -220,9 +241,10 @@ app.put("/api/referrals/:id", (req, res) => {
     data.age,
     data.placeOfResidence,
     data.dateOfSeeing,
-    data.currentCondition,
+    data.caseSummary,
     data.essentialInvestigations,
     data.vitalSigns.weight,
+    data.vitalSigns.spo2,
     data.vitalSigns.bp,
     data.vitalSigns.pr,
     data.vitalSigns.rr,
@@ -235,7 +257,7 @@ app.put("/api/referrals/:id", (req, res) => {
     data.phone_number,
     data.medicSignature,
     data.departmentName,
-    data.date,
+    data.referralDate,
     id,
   ];
 
