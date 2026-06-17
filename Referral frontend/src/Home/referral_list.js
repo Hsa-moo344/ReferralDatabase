@@ -183,7 +183,9 @@ const ReferralList = () => {
       doc.line(10, y + 2, 200, y + 2);
 
       y += 7;
-      doc.text(item.current_condition || "-", 10, y, { maxWidth: 180 });
+      doc.text(item.current_complaint || "-", 10, y, {
+        maxWidth: 180,
+      });
 
       // ===== SECTION 2 =====
       y += 10;
@@ -196,17 +198,30 @@ const ReferralList = () => {
       });
 
       // ===== VITAL SIGNS =====
-      y += 10;
+      y += 15;
+
+      doc.setFont("helvetica", "bold");
       doc.text("3. Vital Signs:", 10, y);
 
       y += 7;
-      doc.text(
-        `Weight: ${item.weight || ""}   BP: ${item.bp || ""}   PR: ${
-          item.pr || ""
-        }   RR: ${item.rr || ""}   Temp: ${item.temp || ""}`,
-        10,
-        y,
-      );
+
+      doc.setFont("helvetica", "normal");
+      doc.text(`Weight: ${item.weight || ""}`, 10, y);
+
+      y += 6;
+      doc.text(`SPO2: ${item.spo2 || ""}`, 10, y);
+
+      y += 6;
+      doc.text(`BP: ${item.bp || ""}`, 10, y);
+
+      y += 6;
+      doc.text(`PR: ${item.pr || ""}`, 10, y);
+
+      y += 6;
+      doc.text(`RR: ${item.rr || ""}`, 10, y);
+
+      y += 6;
+      doc.text(`Temp: ${item.temp || ""}`, 10, y);
 
       // ===== DIAGNOSIS =====
       y += 10;
@@ -251,24 +266,25 @@ const ReferralList = () => {
       });
 
       // ===== FOOTER =====
-      y += 15;
-      doc.text(`Phone: ${item.phone_number || ""}`, 10, y);
+      y += 20;
 
-      y += 10;
+      doc.text(`Phone Number: ${item.phone_number || ""}`, 10, y);
+
+      y += 8;
       doc.text(`Department: ${item.department_name || ""}`, 10, y);
 
-      y += 10;
+      y += 8;
       doc.text(
-        `Date: ${item.referral_date ? item.referral_date.split("T")[0] : ""}`,
+        `Referral Date: ${
+          item.referral_date ? item.referral_date.split("T")[0] : ""
+        }`,
         10,
         y,
       );
 
-      y += 10;
-      doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
-      y += 10;
-      doc.text("Medic Signature: ____________________", 10, y);
-    });
+      y += 8;
+      doc.text(`Medic Name / Signature: ${item.medic_signature || "-"}`, 10, y);
+    }); // <-- closes filteredData.forEach()
 
     doc.save("Referral_Form.pdf");
   };
