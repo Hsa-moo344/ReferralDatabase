@@ -73,6 +73,9 @@ app.post("/api/login", (req, res) => {
 app.post("/api/referrals", (req, res) => {
   const data = req.body;
 
+  console.log("Received Data:");
+  console.log(JSON.stringify(data, null, 2));
+
   const sql = `
     INSERT INTO patient_referrals (
       rn,
@@ -83,6 +86,7 @@ app.post("/api/referrals", (req, res) => {
       place_of_residence,
       date_of_seeing,
       case_summary,
+      current_complaint,
       refer_information,
       past_history,
       surgical_history,
@@ -106,58 +110,73 @@ app.post("/api/referrals", (req, res) => {
       department_name,
       referral_date
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (
+      ?,?,?,?,?,?,?,?,?,?,
+      ?,?,?,?,?,?,?,?,?,?,
+      ?,?,?,?,?,?,?,?,?,?,
+      ?
+    )
   `;
 
   const values = [
-    data.rn,
-    data.mshHn,
-    data.name,
-    data.gender,
-    data.age,
-    data.placeOfResidence,
-    data.dateOfSeeing,
+    data.rn || null,
+    data.mshHn || null,
+    data.name || null,
+    data.gender || null,
+    data.age || null,
+    data.placeOfResidence || null,
+    data.dateOfSeeingbyMTC || null,
 
-    data.caseSummary,
-    data.referInformation,
-    data.pastHistory,
-    data.surgicalHistory,
-    data.drugAllergy,
-    data.birthHistory,
-    data.immunizationHistory,
+    data.caseSummary || null,
+    data.currentComplaint || null,
+    data.referInformation || null,
 
-    data.essentialInvestigations,
+    data.pastHistory || null,
+    data.surgicalHistory || null,
+    data.drugAllergy || null,
+    data.birthHistory || null,
+    data.immunizationHistory || null,
+    data.essentialInvestigations || null,
 
-    data.vitalSigns.weight,
-    data.vitalSigns.spo2,
-    data.vitalSigns.bp,
-    data.vitalSigns.pr,
-    data.vitalSigns.rr,
-    data.vitalSigns.temp,
+    data.vitalSigns?.weight || null,
+    data.vitalSigns?.spo2 || null,
+    data.vitalSigns?.bp || null,
+    data.vitalSigns?.pr || null,
+    data.vitalSigns?.rr || null,
+    data.vitalSigns?.temp || null,
 
-    data.initialDiagnosis,
-    data.treatmentBeforeReferral,
-    data.reasonsForReferral,
-    data.healthInsurance,
-    data.otherInformation,
-    data.phone_number,
-    data.medicSignature,
-    data.departmentName,
-    data.referralDate,
+    data.initialDiagnosis || null,
+    data.treatmentBeforeReferral || null,
+    data.reasonsForReferral || null,
+
+    data.healthInsurance || null,
+    data.otherInformation || null,
+    data.phone_number || null,
+
+    data.medicSignature || null,
+    data.departmentName || null,
+    data.dateOfReferral || null,
   ];
+
+  console.log("Values:");
+  console.log(values);
 
   pool.query(sql, values, (err, result) => {
     if (err) {
+      console.error("MYSQL ERROR:");
       console.error(err);
 
       return res.status(500).json({
+        success: false,
         message: "Insert failed",
-        error: err,
+        code: err.code,
+        mysqlMessage: err.sqlMessage,
       });
     }
 
     res.json({
       success: true,
+      insertId: result.insertId,
       message: "Saved successfully",
     });
   });
@@ -214,6 +233,13 @@ app.put("/api/referrals/:id", (req, res) => {
       place_of_residence=?,
       date_of_seeing=?,
       case_summary=?,
+      current_complaint=?,
+      refer_information=?,
+      past_history=?,
+      surgical_history=?,
+      drug_allergy=?,
+      birth_history=?,
+      immunization_history=?,
       essential_investigations=?,
       weight=?,
       spo2=?,
@@ -240,8 +266,15 @@ app.put("/api/referrals/:id", (req, res) => {
     data.gender,
     data.age,
     data.placeOfResidence,
-    data.dateOfSeeing,
+    data.dateOfSeeingbyMTC,
     data.caseSummary,
+    data.currentComplaint,
+    data.referInformation,
+    data.pastHistory,
+    data.surgicalHistory,
+    data.drugAllergy,
+    data.birthHistory,
+    data.immunizationHistory,
     data.essentialInvestigations,
     data.vitalSigns.weight,
     data.vitalSigns.spo2,
@@ -257,7 +290,7 @@ app.put("/api/referrals/:id", (req, res) => {
     data.phone_number,
     data.medicSignature,
     data.departmentName,
-    data.referralDate,
+    data.dateOfReferral,
     id,
   ];
 
