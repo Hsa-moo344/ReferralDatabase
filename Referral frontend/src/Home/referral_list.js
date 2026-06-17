@@ -259,7 +259,7 @@ const ReferralList = () => {
 
       y += 10;
       doc.text(
-        `Date: ${item.record_date ? item.record_date.split("T")[0] : ""}`,
+        `Date: ${item.referral_date ? item.referral_date.split("T")[0] : ""}`,
         10,
         y,
       );
@@ -351,7 +351,9 @@ const ReferralList = () => {
                       {item.department_name || ""}
                     </td>
                     <td style={{ border: "1px solid black" }}>
-                      {item.record_date ? item.record_date.split("T")[0] : ""}
+                      {item.referral_date
+                        ? item.referral_date.split("T")[0]
+                        : ""}
                     </td>
 
                     <td style={{ border: "1px solid black" }}>

@@ -34,6 +34,13 @@ const Referalform = () => {
     dateOfSeeingbyMTC: "",
 
     caseSummary: "",
+    currentComplaint: "",
+    referInformation: "",
+    pastHistory: "",
+    surgicalHistory: "",
+    drugAllergy: "",
+    birthHistory: "",
+    immunizationHistory: "",
     essentialInvestigations: "",
 
     vitalSigns: {
@@ -98,7 +105,20 @@ const Referalform = () => {
       // ✅ send refresh signal
       // navigate("/referral-list", { state: { refresh: true } });
     } catch (error) {
-      console.error(error);
+      console.error("Submit Error:", error);
+
+      if (error.response) {
+        console.log("NEW VERSION DEPLOYED:");
+        console.log(error);
+
+        console.log("Response Data:");
+        console.log(error.response?.data);
+
+        alert(JSON.stringify(error.response?.data, null, 2));
+        alert(error.response.data.message);
+      } else {
+        alert("Unable to connect to server");
+      }
     }
   };
 
@@ -123,6 +143,13 @@ const Referalform = () => {
               : "",
 
             caseSummary: data.case_summary || "",
+            currentComplaint: data.current_complaint || "",
+            referInformation: data.refer_information || "",
+            pastHistory: data.past_history || "",
+            surgicalHistory: data.surgical_history || "",
+            drugAllergy: data.drug_allergy || "",
+            birthHistory: data.birth_history || "",
+            immunizationHistory: data.immunization_history || "",
             essentialInvestigations: data.essential_investigations || "",
 
             vitalSigns: {
