@@ -197,6 +197,17 @@ app.get("/api/referrals", (req, res) => {
   });
 });
 
+// Check the route
+app.get("/api/check-columns", (req, res) => {
+  pool.query("SHOW COLUMNS FROM patient_referrals", (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    res.json(result);
+  });
+});
+
 /* ================= GET SINGLE REFERRAL ================= */
 
 app.get("/api/referrals/:id", (req, res) => {
