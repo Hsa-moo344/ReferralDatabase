@@ -114,33 +114,42 @@ const ReferralList = () => {
     const doc = new jsPDF();
 
     filteredData.forEach((item, index) => {
-      if (index !== 0) doc.addPage();
+      if (index > 0) doc.addPage();
 
       drawHeader(doc);
 
       let y = 50;
 
-      // ===== TITLE =====
       doc.setFontSize(14);
-      doc.text("Patient Referral Form", 105, y, { align: "center" });
+      doc.setFont("helvetica", "bold");
+      doc.text("Patient Referral Form", 105, y, {
+        align: "center",
+      });
 
       y += 10;
 
       doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
 
-      // ===== PATIENT INFO =====
+      // =========================
+      // PATIENT INFO
+      // =========================
+
       doc.text(`R/N: ${item.rn || ""}`, 10, y);
       doc.text(`MSH-HN: ${item.msh_hn || ""}`, 110, y);
 
       y += 7;
+
       doc.text(`Name: ${item.name || ""}`, 10, y);
       doc.text(`Sex: ${item.gender || ""}`, 140, y);
       doc.text(`Age: ${item.age || ""}`, 170, y);
 
       y += 7;
+
       doc.text(`Residence: ${item.place_of_residence || ""}`, 10, y);
 
       y += 7;
+
       doc.text(
         `Date of Seeing: ${
           item.date_of_seeing ? item.date_of_seeing.split("T")[0] : ""
@@ -149,131 +158,198 @@ const ReferralList = () => {
         y,
       );
 
-      // ===== SECTION 1 =====
-      y += 10;
-      doc.text("1. Case Summary:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
+      // =========================
+      // CASE SUMMARY
+      // =========================
 
       y += 10;
-      doc.text("Current compliant or concern:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 10;
-      doc.text("Refer information for current concern:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 10;
-      doc.text("Any past history (medicine):", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 10;
-      doc.text("Any past history (surgical):", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 10;
-      doc.text("Drug allergy:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 10;
-      doc.text("Birth history (for neonate):", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 10;
-      doc.text("Immunization history (for child):", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 7;
-      doc.text(item.current_complaint || "-", 10, y, {
-        maxWidth: 180,
-      });
-
-      // ===== SECTION 2 =====
-      y += 10;
-      doc.text("2. Essential Investigations:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
-
-      y += 7;
-      doc.text(item.essential_investigations || "-", 10, y, {
-        maxWidth: 180,
-      });
-
-      // ===== VITAL SIGNS =====
-      y += 15;
+      y = checkPageBreak(doc, y);
 
       doc.setFont("helvetica", "bold");
-      doc.text("3. Vital Signs:", 10, y);
+      doc.text("1. Case Summary", 10, y);
+
+      y += 8;
+
+      doc.setFont("helvetica", "normal");
+
+      doc.text("Current Complaint:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.current_complaint, 10, y);
+
+      y += 5;
+      y = checkPageBreak(doc, y);
+
+      doc.text("Refer Information:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.refer_information, 10, y);
+
+      y += 5;
+      y = checkPageBreak(doc, y);
+
+      doc.text("Past History:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.past_history, 10, y);
+
+      y += 5;
+      y = checkPageBreak(doc, y);
+
+      doc.text("Surgical History:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.surgical_history, 10, y);
+
+      y += 5;
+      y = checkPageBreak(doc, y);
+
+      doc.text("Drug Allergy:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.drug_allergy, 10, y);
+
+      y += 5;
+      y = checkPageBreak(doc, y);
+
+      doc.text("Birth History:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.birth_history, 10, y);
+
+      y += 5;
+      y = checkPageBreak(doc, y);
+
+      doc.text("Immunization History:", 10, y);
+      y += 6;
+      y = addWrappedText(doc, item.immunization_history, 10, y);
+
+      // =========================
+      // INVESTIGATION
+      // =========================
+
+      y += 8;
+      y = checkPageBreak(doc, y);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("2. Essential Investigations", 10, y);
+
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+
+      y = addWrappedText(doc, item.essential_investigations, 10, y);
+
+      // =========================
+      // VITAL SIGNS
+      // =========================
+
+      y += 10;
+      y = checkPageBreak(doc, y);
+
+      doc.setFont("helvetica", "bold");
+      doc.text("3. Vital Signs", 10, y);
 
       y += 7;
 
       doc.setFont("helvetica", "normal");
-      doc.text(`Weight: ${item.weight || ""}`, 10, y);
+
+      doc.text(
+        `Weight: ${item.weight || ""}    SPO2: ${item.spo2 || ""}    BP: ${item.bp || ""}`,
+        10,
+        y,
+      );
 
       y += 6;
-      doc.text(`SPO2: ${item.spo2 || ""}`, 10, y);
 
-      y += 6;
-      doc.text(`BP: ${item.bp || ""}`, 10, y);
+      doc.text(
+        `PR: ${item.pr || ""}    RR: ${item.rr || ""}    Temp: ${item.temp || ""}`,
+        10,
+        y,
+      );
 
-      y += 6;
-      doc.text(`PR: ${item.pr || ""}`, 10, y);
+      // =========================
+      // DIAGNOSIS
+      // =========================
 
-      y += 6;
-      doc.text(`RR: ${item.rr || ""}`, 10, y);
-
-      y += 6;
-      doc.text(`Temp: ${item.temp || ""}`, 10, y);
-
-      // ===== DIAGNOSIS =====
       y += 10;
-      doc.text("4. Initial Diagnosis:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
+      y = checkPageBreak(doc, y);
 
-      y += 7;
-      doc.text(item.initial_diagnosis || "-", 10, y, { maxWidth: 180 });
+      doc.setFont("helvetica", "bold");
+      doc.text("4. Initial Diagnosis", 10, y);
 
-      // ===== TREATMENT =====
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+
+      y = addWrappedText(doc, item.initial_diagnosis, 10, y);
+
+      // =========================
+      // TREATMENT
+      // =========================
+
       y += 10;
-      doc.text("5. Treatment before referral:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
+      y = checkPageBreak(doc, y);
 
-      y += 7;
-      doc.text(item.treatment_before_referral || "-", 10, y, {
-        maxWidth: 180,
-      });
+      doc.setFont("helvetica", "bold");
+      doc.text("5. Treatment Before Referral", 10, y);
 
-      // ===== REASONS =====
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+
+      y = addWrappedText(doc, item.treatment_before_referral, 10, y);
+
+      // =========================
+      // REASON
+      // =========================
+
       y += 10;
-      doc.text("6. Reasons for referral:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
+      y = checkPageBreak(doc, y);
 
-      y += 7;
-      doc.text(item.reasons_for_referral || "-", 10, y, {
-        maxWidth: 180,
-      });
+      doc.setFont("helvetica", "bold");
+      doc.text("6. Reasons For Referral", 10, y);
 
-      // ===== INSURANCE =====
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+
+      y = addWrappedText(doc, item.reasons_for_referral, 10, y);
+
+      // =========================
+      // INSURANCE
+      // =========================
+
       y += 10;
+      y = checkPageBreak(doc, y);
+
       doc.text(`7. Insurance: ${item.health_insurance || ""}`, 10, y);
 
-      // ===== OTHER =====
+      // =========================
+      // OTHER
+      // =========================
+
       y += 10;
-      doc.text("8. Other:", 10, y);
-      doc.line(10, y + 2, 200, y + 2);
+      y = checkPageBreak(doc, y);
 
-      y += 7;
-      doc.text(item.other_information || "-", 10, y, {
-        maxWidth: 180,
-      });
+      doc.setFont("helvetica", "bold");
+      doc.text("8. Other Information", 10, y);
 
-      // ===== FOOTER =====
-      y += 20;
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+
+      y = addWrappedText(doc, item.other_information, 10, y);
+
+      // =========================
+      // FOOTER
+      // =========================
+
+      y += 15;
+      y = checkPageBreak(doc, y);
 
       doc.text(`Phone Number: ${item.phone_number || ""}`, 10, y);
 
       y += 8;
+
       doc.text(`Department: ${item.department_name || ""}`, 10, y);
 
       y += 8;
+
       doc.text(
         `Referral Date: ${
           item.referral_date ? item.referral_date.split("T")[0] : ""
@@ -283,11 +359,13 @@ const ReferralList = () => {
       );
 
       y += 8;
-      doc.text(`Medic Name / Signature: ${item.medic_signature || "-"}`, 10, y);
-    }); // <-- closes filteredData.forEach()
+
+      doc.text(`Medic Name / Signature: ${item.medic_signature || ""}`, 10, y);
+    });
 
     doc.save("Referral_Form.pdf");
   };
+
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     navigate("/login");
