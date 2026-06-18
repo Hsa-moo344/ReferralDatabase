@@ -213,11 +213,11 @@ const ReferralList = () => {
 
   doc.text(
     `Weight:${item.weight || ""}
-  SPO2:${item.spo2 || ""}
-  BP:${item.bp || ""}
-  PR:${item.pr || ""}
-  RR:${item.rr || ""}
-  Temp:${item.temp || ""}`,
+    SPO2:${item.spo2 || ""}
+    BP:${item.bp || ""}
+    PR:${item.pr || ""}
+    RR:${item.rr || ""}
+    Temp:${item.temp || ""}`,
     77,
     y + 10,
   );
@@ -294,6 +294,8 @@ const ReferralList = () => {
   y += 5;
 
   doc.text("Signature", 10, y);
+
+  doc.save("NEW_Referral_Form.pdf");
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
