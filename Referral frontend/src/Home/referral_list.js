@@ -179,7 +179,6 @@ const ReferralList = () => {
   doc.text("Drug Allergy", 12, y + 5);
   doc.text("Birth History", 75, y + 5);
   doc.text("Immunization History", 138, y + 5);
-
   doc.setFont("helvetica", "normal");
 
   doc.text(item.drug_allergy || "-", 12, y + 12, { maxWidth: 55 });
