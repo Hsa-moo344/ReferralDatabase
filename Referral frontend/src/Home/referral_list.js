@@ -108,6 +108,26 @@ const ReferralList = () => {
       alert("Failed to delete");
     }
   };
+  // ===== PDF HELPERS =====
+
+  const PAGE_HEIGHT = 280;
+
+  const checkPageBreak = (doc, y) => {
+    if (y > PAGE_HEIGHT) {
+      doc.addPage();
+      drawHeader(doc);
+      return 50;
+    }
+    return y;
+  };
+
+  const addWrappedText = (doc, text, x, y, width = 180) => {
+    const lines = doc.splitTextToSize(text || "-", width);
+
+    doc.text(lines, x, y);
+
+    return y + lines.length * 5;
+  };
 
   // ===== DOWNLOAD PDF =====
   const downloadPDF = () => {
