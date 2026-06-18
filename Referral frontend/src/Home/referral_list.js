@@ -130,9 +130,6 @@ const ReferralList = () => {
   };
 
   // // ===== DOWNLOAD PDF =====
-  // =========================
-  // CASE SUMMARY TABLE
-  // =========================
 
   y += 10;
 
@@ -216,11 +213,11 @@ const ReferralList = () => {
 
   doc.text(
     `Weight:${item.weight || ""}
-SPO2:${item.spo2 || ""}
-BP:${item.bp || ""}
-PR:${item.pr || ""}
-RR:${item.rr || ""}
-Temp:${item.temp || ""}`,
+    SPO2:${item.spo2 || ""}
+    BP:${item.bp || ""}
+    PR:${item.pr || ""}
+    RR:${item.rr || ""}
+    Temp:${item.temp || ""}`,
     77,
     y + 10,
   );
