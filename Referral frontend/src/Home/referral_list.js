@@ -380,7 +380,15 @@ const ReferralList = () => {
 
       y += 8;
 
-      doc.text(`Medic Name / Signature: ${item.medic_signature || ""}`, 10, y);
+      doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
+
+      y += 12;
+
+      doc.line(10, y, 80, y);
+
+      y += 5;
+
+      doc.text("Signature", 10, y);
     });
 
     doc.save("Referral_Form.pdf");
