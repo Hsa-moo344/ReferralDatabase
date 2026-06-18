@@ -129,270 +129,437 @@ const ReferralList = () => {
     return y + lines.length * 5;
   };
 
-  // ===== DOWNLOAD PDF =====
-  const downloadPDF = () => {
-    const doc = new jsPDF();
+  // // ===== DOWNLOAD PDF =====
+  // const downloadPDF = () => {
+  //   const doc = new jsPDF();
 
-    filteredData.forEach((item, index) => {
-      if (index > 0) doc.addPage();
+  //   filteredData.forEach((item, index) => {
+  //     if (index > 0) doc.addPage();
 
-      drawHeader(doc);
+  //     drawHeader(doc);
 
-      let y = 50;
+  //     let y = 50;
 
-      doc.setFontSize(14);
-      doc.setFont("helvetica", "bold");
-      doc.text("Patient Referral Form", 105, y, {
-        align: "center",
-      });
+  //     doc.setFontSize(14);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("Patient Referral Form", 105, y, {
+  //       align: "center",
+  //     });
 
-      y += 10;
+  //     y += 10;
 
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
+  //     doc.setFontSize(10);
+  //     doc.setFont("helvetica", "normal");
 
-      // =========================
-      // PATIENT INFO
-      // =========================
+  //     // =========================
+  //     // PATIENT INFO
+  //     // =========================
 
-      doc.text(`R/N: ${item.rn || ""}`, 10, y);
-      doc.text(`MSH-HN: ${item.msh_hn || ""}`, 110, y);
+  //     doc.text(`R/N: ${item.rn || ""}`, 10, y);
+  //     doc.text(`MSH-HN: ${item.msh_hn || ""}`, 110, y);
 
-      y += 7;
+  //     y += 7;
 
-      doc.text(`Name: ${item.name || ""}`, 10, y);
-      doc.text(`Sex: ${item.gender || ""}`, 140, y);
-      doc.text(`Age: ${item.age || ""}`, 170, y);
+  //     doc.text(`Name: ${item.name || ""}`, 10, y);
+  //     doc.text(`Sex: ${item.gender || ""}`, 140, y);
+  //     doc.text(`Age: ${item.age || ""}`, 170, y);
 
-      y += 7;
+  //     y += 7;
 
-      doc.text(`Residence: ${item.place_of_residence || ""}`, 10, y);
+  //     doc.text(`Residence: ${item.place_of_residence || ""}`, 10, y);
 
-      y += 7;
+  //     y += 7;
 
-      doc.text(
-        `Date of Seeing: ${
-          item.date_of_seeing ? item.date_of_seeing.split("T")[0] : ""
-        }`,
-        10,
-        y,
-      );
+  //     doc.text(
+  //       `Date of Seeing: ${
+  //         item.date_of_seeing ? item.date_of_seeing.split("T")[0] : ""
+  //       }`,
+  //       10,
+  //       y,
+  //     );
 
-      // =========================
-      // CASE SUMMARY
-      // =========================
+  //     // =========================
+  //     // CASE SUMMARY
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("1. Case Summary", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("1. Case Summary", 10, y);
 
-      y += 8;
+  //     y += 8;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      doc.text("Current Complaint:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.current_complaint, 10, y);
+  //     doc.text("Current Complaint:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.current_complaint, 10, y);
 
-      y += 5;
-      y = checkPageBreak(doc, y);
+  //     y += 5;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text("Refer Information:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.refer_information, 10, y);
+  //     doc.text("Refer Information:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.refer_information, 10, y);
 
-      y += 5;
-      y = checkPageBreak(doc, y);
+  //     y += 5;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text("Past History:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.past_history, 10, y);
+  //     doc.text("Past History:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.past_history, 10, y);
 
-      y += 5;
-      y = checkPageBreak(doc, y);
+  //     y += 5;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text("Surgical History:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.surgical_history, 10, y);
+  //     doc.text("Surgical History:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.surgical_history, 10, y);
 
-      y += 5;
-      y = checkPageBreak(doc, y);
+  //     y += 5;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text("Drug Allergy:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.drug_allergy, 10, y);
+  //     doc.text("Drug Allergy:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.drug_allergy, 10, y);
 
-      y += 5;
-      y = checkPageBreak(doc, y);
+  //     y += 5;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text("Birth History:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.birth_history, 10, y);
+  //     doc.text("Birth History:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.birth_history, 10, y);
 
-      y += 5;
-      y = checkPageBreak(doc, y);
+  //     y += 5;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text("Immunization History:", 10, y);
-      y += 6;
-      y = addWrappedText(doc, item.immunization_history, 10, y);
+  //     doc.text("Immunization History:", 10, y);
+  //     y += 6;
+  //     y = addWrappedText(doc, item.immunization_history, 10, y);
 
-      // =========================
-      // INVESTIGATION
-      // =========================
+  //     // =========================
+  //     // INVESTIGATION
+  //     // =========================
 
-      y += 8;
-      y = checkPageBreak(doc, y);
+  //     y += 8;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("2. Essential Investigations", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("2. Essential Investigations", 10, y);
 
-      y += 6;
+  //     y += 6;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      y = addWrappedText(doc, item.essential_investigations, 10, y);
+  //     y = addWrappedText(doc, item.essential_investigations, 10, y);
 
-      // =========================
-      // VITAL SIGNS
-      // =========================
+  //     // =========================
+  //     // VITAL SIGNS
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("3. Vital Signs", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("3. Vital Signs", 10, y);
 
-      y += 7;
+  //     y += 7;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      doc.text(
-        `Weight: ${item.weight || ""}    SPO2: ${item.spo2 || ""}    BP: ${item.bp || ""}`,
-        10,
-        y,
-      );
+  //     doc.text(
+  //       `Weight: ${item.weight || ""}    SPO2: ${item.spo2 || ""}    BP: ${item.bp || ""}`,
+  //       10,
+  //       y,
+  //     );
 
-      y += 6;
+  //     y += 6;
 
-      doc.text(
-        `PR: ${item.pr || ""}    RR: ${item.rr || ""}    Temp: ${item.temp || ""}`,
-        10,
-        y,
-      );
+  //     doc.text(
+  //       `PR: ${item.pr || ""}    RR: ${item.rr || ""}    Temp: ${item.temp || ""}`,
+  //       10,
+  //       y,
+  //     );
 
-      // =========================
-      // DIAGNOSIS
-      // =========================
+  //     // =========================
+  //     // DIAGNOSIS
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("4. Initial Diagnosis", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("4. Initial Diagnosis", 10, y);
 
-      y += 6;
+  //     y += 6;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      y = addWrappedText(doc, item.initial_diagnosis, 10, y);
+  //     y = addWrappedText(doc, item.initial_diagnosis, 10, y);
 
-      // =========================
-      // TREATMENT
-      // =========================
+  //     // =========================
+  //     // TREATMENT
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("5. Treatment Before Referral", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("5. Treatment Before Referral", 10, y);
 
-      y += 6;
+  //     y += 6;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      y = addWrappedText(doc, item.treatment_before_referral, 10, y);
+  //     y = addWrappedText(doc, item.treatment_before_referral, 10, y);
 
-      // =========================
-      // REASON
-      // =========================
+  //     // =========================
+  //     // REASON
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("6. Reasons For Referral", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("6. Reasons For Referral", 10, y);
 
-      y += 6;
+  //     y += 6;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      y = addWrappedText(doc, item.reasons_for_referral, 10, y);
+  //     y = addWrappedText(doc, item.reasons_for_referral, 10, y);
 
-      // =========================
-      // INSURANCE
-      // =========================
+  //     // =========================
+  //     // INSURANCE
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text(`7. Insurance: ${item.health_insurance || ""}`, 10, y);
+  //     doc.text(`7. Insurance: ${item.health_insurance || ""}`, 10, y);
 
-      // =========================
-      // OTHER
-      // =========================
+  //     // =========================
+  //     // OTHER
+  //     // =========================
 
-      y += 10;
-      y = checkPageBreak(doc, y);
+  //     y += 10;
+  //     y = checkPageBreak(doc, y);
 
-      doc.setFont("helvetica", "bold");
-      doc.text("8. Other Information", 10, y);
+  //     doc.setFont("helvetica", "bold");
+  //     doc.text("8. Other Information", 10, y);
 
-      y += 6;
+  //     y += 6;
 
-      doc.setFont("helvetica", "normal");
+  //     doc.setFont("helvetica", "normal");
 
-      y = addWrappedText(doc, item.other_information, 10, y);
+  //     y = addWrappedText(doc, item.other_information, 10, y);
 
-      // =========================
-      // FOOTER
-      // =========================
+  //     // =========================
+  //     // FOOTER
+  //     // =========================
 
-      y += 15;
-      y = checkPageBreak(doc, y);
+  //     y += 15;
+  //     y = checkPageBreak(doc, y);
 
-      doc.text(`Phone Number: ${item.phone_number || ""}`, 10, y);
+  //     doc.text(`Phone Number: ${item.phone_number || ""}`, 10, y);
 
-      y += 8;
+  //     y += 8;
 
-      doc.text(`Department: ${item.department_name || ""}`, 10, y);
+  //     doc.text(`Department: ${item.department_name || ""}`, 10, y);
 
-      y += 8;
+  //     y += 8;
 
-      doc.text(
-        `Referral Date: ${
-          item.referral_date ? item.referral_date.split("T")[0] : ""
-        }`,
-        10,
-        y,
-      );
+  //     doc.text(
+  //       `Referral Date: ${
+  //         item.referral_date ? item.referral_date.split("T")[0] : ""
+  //       }`,
+  //       10,
+  //       y,
+  //     );
 
-      y += 8;
+  //     y += 8;
 
-      doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
+  //     doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
 
-      y += 12;
+  //     y += 12;
 
-      doc.line(10, y, 80, y);
+  //     doc.line(10, y, 80, y);
 
-      y += 5;
+  //     y += 5;
 
-      doc.text("Signature", 10, y);
-    });
+  //     doc.text("Signature", 10, y);
+  //   });
 
-    doc.save("Referral_Form.pdf");
-  };
+  //   doc.save("Referral_Form.pdf");
+  // };
+  // =========================
+  // CASE SUMMARY TABLE
+  // =========================
+
+  y += 10;
+
+  doc.setFont("helvetica", "bold");
+  doc.text("1. Case Summary", 10, y);
+
+  y += 5;
+
+  // Draw table
+  doc.rect(10, y, 190, 35);
+
+  // Vertical lines
+  doc.line(57, y, 57, y + 35);
+  doc.line(104, y, 104, y + 35);
+  doc.line(152, y, 152, y + 35);
+
+  // Headers
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+
+  doc.text("Current Complaint", 12, y + 5);
+  doc.text("Refer Information", 59, y + 5);
+  doc.text("Past History", 106, y + 5);
+  doc.text("Surgical History", 154, y + 5);
+
+  doc.setFont("helvetica", "normal");
+
+  // Values
+  doc.text(item.current_complaint || "-", 12, y + 12, { maxWidth: 42 });
+  doc.text(item.refer_information || "-", 59, y + 12, { maxWidth: 42 });
+  doc.text(item.past_history || "-", 106, y + 12, { maxWidth: 42 });
+  doc.text(item.surgical_history || "-", 154, y + 12, { maxWidth: 42 });
+
+  y += 40;
+
+  // =========================
+  // SECOND ROW
+  // =========================
+
+  doc.rect(10, y, 190, 25);
+
+  doc.line(73, y, 73, y + 25);
+  doc.line(136, y, 136, y + 25);
+
+  doc.setFont("helvetica", "bold");
+
+  doc.text("Drug Allergy", 12, y + 5);
+  doc.text("Birth History", 75, y + 5);
+  doc.text("Immunization History", 138, y + 5);
+
+  doc.setFont("helvetica", "normal");
+
+  doc.text(item.drug_allergy || "-", 12, y + 12, { maxWidth: 55 });
+  doc.text(item.birth_history || "-", 75, y + 12, { maxWidth: 55 });
+  doc.text(item.immunization_history || "-", 138, y + 12, {
+    maxWidth: 55,
+  });
+
+  y += 35;
+
+  // =========================
+  // INVESTIGATION / VITAL / DIAGNOSIS
+  // =========================
+
+  doc.rect(10, y, 190, 30);
+
+  doc.line(75, y, 75, y + 30);
+  doc.line(140, y, 140, y + 30);
+
+  doc.setFont("helvetica", "bold");
+
+  doc.text("2. Essential Investigations", 12, y + 5);
+  doc.text("3. Vital Signs", 77, y + 5);
+  doc.text("4. Initial Diagnosis", 142, y + 5);
+
+  doc.setFont("helvetica", "normal");
+
+  doc.text(item.essential_investigations || "-", 12, y + 13, {
+    maxWidth: 60,
+  });
+
+  doc.text(
+    `Weight:${item.weight || ""}
+SPO2:${item.spo2 || ""}
+BP:${item.bp || ""}
+PR:${item.pr || ""}
+RR:${item.rr || ""}
+Temp:${item.temp || ""}`,
+    77,
+    y + 10,
+  );
+
+  doc.text(item.initial_diagnosis || "-", 142, y + 13, {
+    maxWidth: 55,
+  });
+
+  y += 40;
+
+  // =========================
+  // TREATMENT / REASON / INSURANCE / OTHER
+  // =========================
+
+  doc.rect(10, y, 190, 30);
+
+  doc.line(57, y, 57, y + 30);
+  doc.line(104, y, 104, y + 30);
+  doc.line(152, y, 152, y + 30);
+
+  doc.setFont("helvetica", "bold");
+
+  doc.text("5. Treatment", 12, y + 5);
+  doc.text("6. Reasons", 59, y + 5);
+  doc.text("7. Insurance", 106, y + 5);
+  doc.text("8. Other", 154, y + 5);
+
+  doc.setFont("helvetica", "normal");
+
+  doc.text(item.treatment_before_referral || "-", 12, y + 12, {
+    maxWidth: 42,
+  });
+
+  doc.text(item.reasons_for_referral || "-", 59, y + 12, {
+    maxWidth: 42,
+  });
+
+  doc.text(item.health_insurance || "-", 106, y + 12, {
+    maxWidth: 42,
+  });
+
+  doc.text(item.other_information || "-", 154, y + 12, {
+    maxWidth: 42,
+  });
+
+  y += 40;
+
+  // =========================
+  // FOOTER
+  // =========================
+
+  doc.text(`Phone Number: ${item.phone_number || ""}`, 10, y);
+  doc.text(`Department: ${item.department_name || ""}`, 90, y);
+
+  y += 10;
+
+  doc.text(
+    `Referral Date: ${
+      item.referral_date ? item.referral_date.split("T")[0] : ""
+    }`,
+    10,
+    y,
+  );
+
+  y += 15;
+
+  doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
+
+  y += 12;
+
+  // signature line
+  doc.line(10, y, 80, y);
+
+  y += 5;
+
+  doc.text("Signature", 10, y);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
