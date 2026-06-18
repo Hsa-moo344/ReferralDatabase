@@ -179,6 +179,7 @@ const ReferralList = () => {
   doc.text("Drug Allergy", 12, y + 5);
   doc.text("Birth History", 75, y + 5);
   doc.text("Immunization History", 138, y + 5);
+
   doc.setFont("helvetica", "normal");
 
   doc.text(item.drug_allergy || "-", 12, y + 12, { maxWidth: 55 });
@@ -212,11 +213,11 @@ const ReferralList = () => {
 
   doc.text(
     `Weight:${item.weight || ""}
-    SPO2:${item.spo2 || ""}
-    BP:${item.bp || ""}
-    PR:${item.pr || ""}
-    RR:${item.rr || ""}
-    Temp:${item.temp || ""}`,
+  SPO2:${item.spo2 || ""}
+  BP:${item.bp || ""}
+  PR:${item.pr || ""}
+  RR:${item.rr || ""}
+  Temp:${item.temp || ""}`,
     77,
     y + 10,
   );
