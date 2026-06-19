@@ -408,7 +408,9 @@ const ReferralList = () => {
               Next ▶
             </button>
           </div>
-          <button onClick={() => downloadPDF(item)}>📄 Download PDF</button>
+          <button onClick={downloadPDF} className={PatientReferral.downloadBtn}>
+            📄 Download PDF
+          </button>
         </div>
       </div>
     </div>
