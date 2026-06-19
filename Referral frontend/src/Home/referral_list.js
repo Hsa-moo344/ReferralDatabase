@@ -172,22 +172,31 @@ const ReferralList = () => {
 
     doc.setFont("helvetica", "normal");
 
-    doc.text(`Current Complaint: ${item.current_complaint || "-"}`, 10, y, {
+    doc.text(
+      `Case Summary: ${item.case_summary || item.caseSummary || "-"}`,
+      10,
+      y,
+      { maxWidth: 180 },
+    );
+
+    y += 10;
+
+    doc.text(`Current Complaint: ${item.currentComplaint || "-"}`, 10, y, {
       maxWidth: 180,
     });
     y += 7;
 
-    doc.text(`Refer Information: ${item.refer_information || "-"}`, 10, y, {
+    doc.text(`Refer Information: ${item.referInformation || "-"}`, 10, y, {
       maxWidth: 180,
     });
     y += 7;
 
-    doc.text(`Past History: ${item.past_history || "-"}`, 10, y, {
+    doc.text(`Past History: ${item.pastHistory || "-"}`, 10, y, {
       maxWidth: 180,
     });
     y += 7;
 
-    doc.text(`Surgical History: ${item.surgical_history || "-"}`, 10, y, {
+    doc.text(`Surgical History: ${item.surgicalHistory || "-"}`, 10, y, {
       maxWidth: 180,
     });
     y += 10;
@@ -362,7 +371,6 @@ const ReferralList = () => {
                         ? item.referral_date.split("T")[0]
                         : ""}
                     </td>
-
                     <td style={{ border: "1px solid black" }}>
                       <button
                         className={PatientReferral.EditButton}
@@ -376,6 +384,13 @@ const ReferralList = () => {
                         onClick={() => handleDelete(item.id)}
                       >
                         🗑️ Delete
+                      </button>
+
+                      <button
+                        className={PatientReferral.downloadBtn}
+                        onClick={() => downloadPDF(item)}
+                      >
+                        📄 PDF
                       </button>
                     </td>
                   </tr>
