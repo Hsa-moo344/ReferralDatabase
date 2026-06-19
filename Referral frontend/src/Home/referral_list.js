@@ -129,173 +129,155 @@ const ReferralList = () => {
     return y + lines.length * 5;
   };
 
-  // // ===== DOWNLOAD PDF =====
+  const downloadPDF = (item) => {
+    const doc = new jsPDF();
 
-  y += 10;
+    let y = 50;
 
-  doc.setFont("helvetica", "bold");
-  doc.text("1. Case Summary", 10, y);
+    // ===== HEADER =====
+    drawHeader(doc);
 
-  y += 5;
+    // ===== TITLE =====
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("PATIENT REFERRAL FORM", 105, y, { align: "center" });
 
-  // Draw table
-  doc.rect(10, y, 190, 35);
+    y += 10;
 
-  // Vertical lines
-  doc.line(57, y, 57, y + 35);
-  doc.line(104, y, 104, y + 35);
-  doc.line(152, y, 152, y + 35);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
 
-  // Headers
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
+    // ===== PATIENT INFO =====
+    doc.text(`R/N: ${item.rn || "-"}`, 10, y);
+    doc.text(`Name: ${item.name || "-"}`, 80, y);
+    doc.text(`Gender: ${item.gender || "-"}`, 150, y);
 
-  doc.text("Current Complaint", 12, y + 5);
-  doc.text("Refer Information", 59, y + 5);
-  doc.text("Past History", 106, y + 5);
-  doc.text("Surgical History", 154, y + 5);
+    y += 7;
 
-  doc.setFont("helvetica", "normal");
+    doc.text(`Age: ${item.age || "-"}`, 10, y);
+    doc.text(`Department: ${item.department_name || "-"}`, 80, y);
+    doc.text(
+      `Date: ${item.referral_date ? item.referral_date.split("T")[0] : "-"}`,
+      150,
+      y,
+    );
 
-  // Values
-  doc.text(item.current_complaint || "-", 12, y + 12, { maxWidth: 42 });
-  doc.text(item.refer_information || "-", 59, y + 12, { maxWidth: 42 });
-  doc.text(item.past_history || "-", 106, y + 12, { maxWidth: 42 });
-  doc.text(item.surgical_history || "-", 154, y + 12, { maxWidth: 42 });
+    y += 10;
 
-  y += 40;
+    // ===== CASE SUMMARY =====
+    doc.setFont("helvetica", "bold");
+    doc.text("1. Case Summary", 10, y);
 
-  // =========================
-  // SECOND ROW
-  // =========================
+    y += 6;
 
-  doc.rect(10, y, 190, 25);
+    doc.setFont("helvetica", "normal");
 
-  doc.line(73, y, 73, y + 25);
-  doc.line(136, y, 136, y + 25);
+    doc.text(`Current Complaint: ${item.current_complaint || "-"}`, 10, y, {
+      maxWidth: 180,
+    });
+    y += 7;
 
-  doc.setFont("helvetica", "bold");
+    doc.text(`Refer Information: ${item.refer_information || "-"}`, 10, y, {
+      maxWidth: 180,
+    });
+    y += 7;
 
-  doc.text("Drug Allergy", 12, y + 5);
-  doc.text("Birth History", 75, y + 5);
-  doc.text("Immunization History", 138, y + 5);
+    doc.text(`Past History: ${item.past_history || "-"}`, 10, y, {
+      maxWidth: 180,
+    });
+    y += 7;
 
-  doc.setFont("helvetica", "normal");
+    doc.text(`Surgical History: ${item.surgical_history || "-"}`, 10, y, {
+      maxWidth: 180,
+    });
+    y += 10;
 
-  doc.text(item.drug_allergy || "-", 12, y + 12, { maxWidth: 55 });
-  doc.text(item.birth_history || "-", 75, y + 12, { maxWidth: 55 });
-  doc.text(item.immunization_history || "-", 138, y + 12, {
-    maxWidth: 55,
-  });
+    // ===== VITAL SIGNS (FIXED NESTED OBJECT) =====
+    doc.setFont("helvetica", "bold");
+    doc.text("2. Vital Signs", 10, y);
 
-  y += 35;
+    y += 6;
 
-  // =========================
-  // INVESTIGATION / VITAL / DIAGNOSIS
-  // =========================
+    doc.setFont("helvetica", "normal");
 
-  doc.rect(10, y, 190, 30);
+    doc.text(
+      `Weight: ${item.vitalSigns?.weight || "-"} | SPO2: ${
+        item.vitalSigns?.spo2 || "-"
+      } | BP: ${item.vitalSigns?.bp || "-"}`,
+      10,
+      y,
+    );
 
-  doc.line(75, y, 75, y + 30);
-  doc.line(140, y, 140, y + 30);
+    y += 6;
 
-  doc.setFont("helvetica", "bold");
+    doc.text(
+      `PR: ${item.vitalSigns?.pr || "-"} | RR: ${
+        item.vitalSigns?.rr || "-"
+      } | Temp: ${item.vitalSigns?.temp || "-"}`,
+      10,
+      y,
+    );
 
-  doc.text("2. Essential Investigations", 12, y + 5);
-  doc.text("3. Vital Signs", 77, y + 5);
-  doc.text("4. Initial Diagnosis", 142, y + 5);
+    y += 10;
 
-  doc.setFont("helvetica", "normal");
+    // ===== DIAGNOSIS =====
+    doc.setFont("helvetica", "bold");
+    doc.text("3. Initial Diagnosis", 10, y);
 
-  doc.text(item.essential_investigations || "-", 12, y + 13, {
-    maxWidth: 60,
-  });
+    y += 6;
 
-  doc.text(
-    `Weight:${item.weight || ""}
-    SPO2:${item.spo2 || ""}
-    BP:${item.bp || ""}
-    PR:${item.pr || ""}
-    RR:${item.rr || ""}
-    Temp:${item.temp || ""}`,
-    77,
-    y + 10,
-  );
+    doc.setFont("helvetica", "normal");
 
-  doc.text(item.initial_diagnosis || "-", 142, y + 13, {
-    maxWidth: 55,
-  });
+    doc.text(item.initial_diagnosis || "-", 10, y, { maxWidth: 180 });
 
-  y += 40;
+    y += 10;
 
-  // =========================
-  // TREATMENT / REASON / INSURANCE / OTHER
-  // =========================
+    // ===== TREATMENT =====
+    doc.setFont("helvetica", "bold");
+    doc.text("4. Treatment Before Referral", 10, y);
 
-  doc.rect(10, y, 190, 30);
+    y += 6;
 
-  doc.line(57, y, 57, y + 30);
-  doc.line(104, y, 104, y + 30);
-  doc.line(152, y, 152, y + 30);
+    doc.setFont("helvetica", "normal");
 
-  doc.setFont("helvetica", "bold");
+    doc.text(item.treatment_before_referral || "-", 10, y, {
+      maxWidth: 180,
+    });
 
-  doc.text("5. Treatment", 12, y + 5);
-  doc.text("6. Reasons", 59, y + 5);
-  doc.text("7. Insurance", 106, y + 5);
-  doc.text("8. Other", 154, y + 5);
+    y += 10;
 
-  doc.setFont("helvetica", "normal");
+    // ===== REASONS =====
+    doc.setFont("helvetica", "bold");
+    doc.text("5. Reasons for Referral", 10, y);
 
-  doc.text(item.treatment_before_referral || "-", 12, y + 12, {
-    maxWidth: 42,
-  });
+    y += 6;
 
-  doc.text(item.reasons_for_referral || "-", 59, y + 12, {
-    maxWidth: 42,
-  });
+    doc.setFont("helvetica", "normal");
 
-  doc.text(item.health_insurance || "-", 106, y + 12, {
-    maxWidth: 42,
-  });
+    doc.text(item.reasons_for_referral || "-", 10, y, {
+      maxWidth: 180,
+    });
 
-  doc.text(item.other_information || "-", 154, y + 12, {
-    maxWidth: 42,
-  });
+    y += 10;
 
-  y += 40;
+    // ===== FOOTER =====
+    doc.setFont("helvetica", "normal");
 
-  // =========================
-  // FOOTER
-  // =========================
+    doc.text(`Phone: ${item.phone_number || "-"}`, 10, y);
+    doc.text(`Insurance: ${item.health_insurance || "-"}`, 80, y);
 
-  doc.text(`Phone Number: ${item.phone_number || ""}`, 10, y);
-  doc.text(`Department: ${item.department_name || ""}`, 90, y);
+    y += 7;
 
-  y += 10;
+    doc.text(`Medic: ${item.medic_signature || "-"}`, 10, y);
 
-  doc.text(
-    `Referral Date: ${
-      item.referral_date ? item.referral_date.split("T")[0] : ""
-    }`,
-    10,
-    y,
-  );
+    y += 10;
 
-  y += 15;
+    doc.line(10, y, 80, y);
+    doc.text("Signature", 10, y + 5);
 
-  doc.text(`Medic Name: ${item.medic_signature || ""}`, 10, y);
-
-  y += 12;
-
-  // signature line
-  doc.line(10, y, 80, y);
-
-  y += 5;
-
-  doc.text("Signature", 10, y);
-
-  doc.save("NEW_Referral_Form.pdf");
+    // ===== SAVE FILE =====
+    doc.save(`Referral_${item.name || "patient"}.pdf`);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -426,9 +408,7 @@ const ReferralList = () => {
               Next ▶
             </button>
           </div>
-          <button onClick={downloadPDF} className={PatientReferral.downloadBtn}>
-            📄 Download PDF
-          </button>
+          <button onClick={() => downloadPDF(item)}>📄 Download PDF</button>
         </div>
       </div>
     </div>
