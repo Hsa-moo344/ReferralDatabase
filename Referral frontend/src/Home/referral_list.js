@@ -165,6 +165,7 @@ const ReferralList = () => {
     y += 10;
 
     // ===== CASE SUMMARY =====
+
     doc.setFont("helvetica", "bold");
     doc.text("1. Case Summary", 10, y);
 
@@ -172,33 +173,34 @@ const ReferralList = () => {
 
     doc.setFont("helvetica", "normal");
 
-    doc.text(
-      `Case Summary: ${item.case_summary || item.caseSummary || "-"}`,
-      10,
-      y,
-      { maxWidth: 180 },
-    );
+    doc.text(`Case Summary: ${item.caseSummary || "-"}`, 10, y, {
+      maxWidth: 180,
+    });
 
     y += 10;
 
     doc.text(`Current Complaint: ${item.currentComplaint || "-"}`, 10, y, {
       maxWidth: 180,
     });
+
     y += 7;
 
     doc.text(`Refer Information: ${item.referInformation || "-"}`, 10, y, {
       maxWidth: 180,
     });
+
     y += 7;
 
     doc.text(`Past History: ${item.pastHistory || "-"}`, 10, y, {
       maxWidth: 180,
     });
+
     y += 7;
 
     doc.text(`Surgical History: ${item.surgicalHistory || "-"}`, 10, y, {
       maxWidth: 180,
     });
+
     y += 10;
 
     // ===== VITAL SIGNS (FIXED NESTED OBJECT) =====
