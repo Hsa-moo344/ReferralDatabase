@@ -130,6 +130,7 @@ const ReferralList = () => {
   };
 
   const downloadPDF = (item) => {
+    console.log("NEW PDF VERSION");
     const doc = new jsPDF();
 
     let y = 50;
