@@ -151,16 +151,22 @@ const ReferralList = () => {
     doc.text(`R/N: ${item.rn || "-"}`, 10, y);
     doc.text(`Name: ${item.name || "-"}`, 80, y);
     doc.text(`Gender: ${item.gender || "-"}`, 150, y);
+    y += 7;
+
+    doc.text(`Place of Residence: ${item.placeOfResidence || "-"}`, 10, y);
+
+    y += 7;
+
+    doc.text(
+      `Date of Seeing by MTC: ${item.date_of_seeing_by_mtc || "-"}`,
+      10,
+      y,
+    );
 
     y += 7;
 
     doc.text(`Age: ${item.age || "-"}`, 10, y);
     doc.text(`Department: ${item.department_name || "-"}`, 80, y);
-    doc.text(
-      `Date: ${item.referral_date ? item.referral_date.split("T")[0] : "-"}`,
-      150,
-      y,
-    );
 
     y += 10;
 
@@ -202,6 +208,19 @@ const ReferralList = () => {
     });
 
     y += 10;
+    y = addWrappedText(
+      doc,
+      `Essential Investigation: ${item.essentialInvestigations || "-"}`,
+      10,
+      y,
+    );
+
+    y = addWrappedText(
+      doc,
+      `Examination Findings: ${item.examinationFindings || "-"}`,
+      10,
+      y,
+    );
 
     // ===== VITAL SIGNS (FIXED NESTED OBJECT) =====
     doc.setFont("helvetica", "bold");
@@ -210,24 +229,6 @@ const ReferralList = () => {
     y += 6;
 
     doc.setFont("helvetica", "normal");
-
-    // doc.text(
-    //   `Weight: ${item.vitalSigns?.weight || "-"} | SPO2: ${
-    //     item.vitalSigns?.spo2 || "-"
-    //   } | BP: ${item.vitalSigns?.bp || "-"}`,
-    //   10,
-    //   y,
-    // );
-
-    // y += 6;
-
-    // doc.text(
-    //   `PR: ${item.vitalSigns?.pr || "-"} | RR: ${
-    //     item.vitalSigns?.rr || "-"
-    //   } | Temp: ${item.vitalSigns?.temp || "-"}`,
-    //   10,
-    //   y,
-    // );
 
     doc.text(
       `Weight: ${item.weight || "-"} | SPO2: ${
@@ -294,6 +295,11 @@ const ReferralList = () => {
 
     doc.text(`Phone: ${item.phone_number || "-"}`, 10, y);
     doc.text(`Insurance: ${item.health_insurance || "-"}`, 80, y);
+    doc.text(
+      `Date: ${item.referral_date ? item.referral_date.split("T")[0] : "-"}`,
+      150,
+      y,
+    );
 
     y += 7;
 

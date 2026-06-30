@@ -42,6 +42,7 @@ const Referalform = () => {
     birthHistory: "",
     immunizationHistory: "",
     essentialInvestigations: "",
+    examinationFindings: "",
 
     vitalSigns: {
       weight: "",
@@ -151,7 +152,7 @@ const Referalform = () => {
             birthHistory: data.birth_history || "",
             immunizationHistory: data.immunization_history || "",
             essentialInvestigations: data.essential_investigations || "",
-
+            examinationFindings: data.examination_findings || "",
             vitalSigns: {
               weight: data.weight || "",
               spo2: data.spo2 || "",
@@ -349,6 +350,13 @@ const Referalform = () => {
               <textarea
                 name="essentialInvestigations"
                 value={formData.essentialInvestigations}
+                onChange={handleChange}
+              />
+
+              <label>Examination Findings</label>
+              <textarea
+                name="examinationFindings"
+                value={formData.examinationFindings}
                 onChange={handleChange}
               />
 
