@@ -73,8 +73,8 @@ app.post("/api/login", (req, res) => {
 app.post("/api/referrals", (req, res) => {
   const data = req.body;
 
-  console.log("Received Data:");
-  console.log(JSON.stringify(data, null, 2));
+  console.log("Received data from frontend:");
+  console.log(data);
 
   const sql = `
     INSERT INTO patient_referrals (
@@ -94,6 +94,7 @@ app.post("/api/referrals", (req, res) => {
       birth_history,
       immunization_history,
       essential_investigations,
+      examination_findings,
       weight,
       spo2,
       bp,
@@ -110,12 +111,7 @@ app.post("/api/referrals", (req, res) => {
       department_name,
       referral_date
     )
-    VALUES (
-      ?,?,?,?,?,?,?,?,?,?,
-      ?,?,?,?,?,?,?,?,?,?,
-      ?,?,?,?,?,?,?,?,?,?,
-      ?
-    )
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `;
 
   const values = [
@@ -125,7 +121,9 @@ app.post("/api/referrals", (req, res) => {
     data.gender || null,
     data.age || null,
     data.placeOfResidence || null,
-    data.dateOfSeeingByMTC || null,
+
+    // FIX HERE
+    data.dateOfSeeingbyMTC || null,
 
     data.caseSummary || null,
     data.currentComplaint || null,
@@ -137,6 +135,7 @@ app.post("/api/referrals", (req, res) => {
     data.birthHistory || null,
     data.immunizationHistory || null,
     data.essentialInvestigations || null,
+    data.examinationFindings || null,
 
     data.vitalSigns?.weight || null,
     data.vitalSigns?.spo2 || null,
@@ -158,30 +157,31 @@ app.post("/api/referrals", (req, res) => {
     data.dateOfReferral || null,
   ];
 
-  console.log("Values:");
+  console.log("INSERT VALUES");
   console.log(values);
 
   pool.query(sql, values, (err, result) => {
     if (err) {
-      console.error("MYSQL ERROR:");
-      console.error(err);
+      console.log("===== MYSQL INSERT ERROR =====");
+
+      console.log("Error Code:", err.code);
+
+      console.log("Message:", err.sqlMessage);
+
+      console.log("SQL:", err.sql);
 
       return res.status(500).json({
         success: false,
-        message: "Insert failed",
-        code: err.code,
-        mysqlMessage: err.sqlMessage,
+        error: err.sqlMessage,
       });
     }
 
     res.json({
       success: true,
       insertId: result.insertId,
-      message: "Saved successfully",
     });
   });
 });
-
 /* ================= GET ALL REFERRALS ================= */
 
 app.get("/api/referrals", (req, res) => {
@@ -208,7 +208,7 @@ app.get("/api/check-columns", (req, res) => {
   });
 });
 
-/* ================= GET SINGLE REFERRAL ================= */
+// /* ================= GET SINGLE REFERRAL ================= */
 
 app.get("/api/referrals/:id", (req, res) => {
   const { id } = req.params;
@@ -227,7 +227,7 @@ app.get("/api/referrals/:id", (req, res) => {
   );
 });
 
-/* ================= UPDATE REFERRAL ================= */
+// /* ================= UPDATE REFERRAL ================= */
 
 app.put("/api/referrals/:id", (req, res) => {
   const { id } = req.params;
@@ -252,6 +252,7 @@ app.put("/api/referrals/:id", (req, res) => {
       birth_history=?,
       immunization_history=?,
       essential_investigations=?,
+      examination_findings=?,
       weight=?,
       spo2=?,
       bp=?,
@@ -287,6 +288,7 @@ app.put("/api/referrals/:id", (req, res) => {
     data.birthHistory,
     data.immunizationHistory,
     data.essentialInvestigations,
+    data.examinationFindings || null,
     data.vitalSigns.weight,
     data.vitalSigns.spo2,
     data.vitalSigns.bp,
