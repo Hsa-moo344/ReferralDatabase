@@ -173,31 +173,31 @@ const ReferralList = () => {
 
     doc.setFont("helvetica", "normal");
 
-    doc.text(`Case Summary: ${item.caseSummary || "-"}`, 10, y, {
+    doc.text(`Case Summary: ${item.case_summary || "-"}`, 10, y, {
       maxWidth: 180,
     });
 
     y += 10;
 
-    doc.text(`Current Complaint: ${item.currentComplaint || "-"}`, 10, y, {
+    doc.text(`Current Complaint: ${item.current_complaint || "-"}`, 10, y, {
       maxWidth: 180,
     });
 
     y += 7;
 
-    doc.text(`Refer Information: ${item.referInformation || "-"}`, 10, y, {
+    doc.text(`Refer Information: ${item.refer_information || "-"}`, 10, y, {
       maxWidth: 180,
     });
 
     y += 7;
 
-    doc.text(`Past History: ${item.pastHistory || "-"}`, 10, y, {
+    doc.text(`Past History: ${item.past_history || "-"}`, 10, y, {
       maxWidth: 180,
     });
 
     y += 7;
 
-    doc.text(`Surgical History: ${item.surgicalHistory || "-"}`, 10, y, {
+    doc.text(`Surgical History: ${item.surgical_history || "-"}`, 10, y, {
       maxWidth: 180,
     });
 
@@ -211,10 +211,28 @@ const ReferralList = () => {
 
     doc.setFont("helvetica", "normal");
 
+    // doc.text(
+    //   `Weight: ${item.vitalSigns?.weight || "-"} | SPO2: ${
+    //     item.vitalSigns?.spo2 || "-"
+    //   } | BP: ${item.vitalSigns?.bp || "-"}`,
+    //   10,
+    //   y,
+    // );
+
+    // y += 6;
+
+    // doc.text(
+    //   `PR: ${item.vitalSigns?.pr || "-"} | RR: ${
+    //     item.vitalSigns?.rr || "-"
+    //   } | Temp: ${item.vitalSigns?.temp || "-"}`,
+    //   10,
+    //   y,
+    // );
+
     doc.text(
-      `Weight: ${item.vitalSigns?.weight || "-"} | SPO2: ${
-        item.vitalSigns?.spo2 || "-"
-      } | BP: ${item.vitalSigns?.bp || "-"}`,
+      `Weight: ${item.weight || "-"} | SPO2: ${
+        item.spo2 || "-"
+      } | BP: ${item.bp || "-"}`,
       10,
       y,
     );
@@ -222,9 +240,9 @@ const ReferralList = () => {
     y += 6;
 
     doc.text(
-      `PR: ${item.vitalSigns?.pr || "-"} | RR: ${
-        item.vitalSigns?.rr || "-"
-      } | Temp: ${item.vitalSigns?.temp || "-"}`,
+      `PR: ${item.pr || "-"} | RR: ${
+        item.rr || "-"
+      } | Temp: ${item.temp || "-"}`,
       10,
       y,
     );
@@ -425,7 +443,14 @@ const ReferralList = () => {
               Next ▶
             </button>
           </div>
-          <button onClick={downloadPDF} className={PatientReferral.downloadBtn}>
+          <button
+            className={PatientReferral.downloadBtn}
+            onClick={() => {
+              if (data.length > 0) {
+                downloadPDF(data[0]);
+              }
+            }}
+          >
             📄 Download PDF
           </button>
         </div>
