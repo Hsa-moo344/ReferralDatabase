@@ -309,10 +309,11 @@ app.put("/api/referrals/:id", (req, res) => {
 
   pool.query(sql, values, (err, result) => {
     if (err) {
-      console.error(err);
+      console.error("Update Error:", err);
 
       return res.status(500).json({
-        message: "Update failed",
+        message: err.message,
+        error: err,
       });
     }
 
