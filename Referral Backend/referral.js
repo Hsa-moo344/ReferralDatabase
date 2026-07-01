@@ -303,7 +303,7 @@ app.put("/api/referrals/:id", (req, res) => {
     data.phone_number,
     data.medicSignature,
     data.departmentName,
-    data.dateOfReferral,
+    data.dateOfReferral || null,
     id,
   ];
 
